@@ -1,3 +1,22 @@
+FormtasticNestedEdit
+====================
+
+A helper method + example template on how to handle accepts_nested_attributes_for
+
+You have to use jQuery
+
+Install
+=======
+
+After install as a plugin do
+
+./script/generate nested_edit
+
+This will copy the images, and the js file to your project and gives you an example usage.
+
+Example
+=======
+
 
 1. Include the javascript and stylesheet in your layout.html.erb
 
@@ -14,56 +33,9 @@
   has_many :documents # , :as => :attachable
   accepts_nested_attributes_for :documents, :allow_destroy => true
 
-
 4. Design your own form. Sample partial view for the associated model:
 
-_document.html.erb:
+Use the example template.
 
-<fieldset class="document">
-  <legend><%= t("Document", :scope =>[:partials, :documents]) %></legend>
+Copyright (c) 2010 Gudata, released under the MIT license
 
-  <div id="dialog_<%= f.object_id.abs %>" title="<%= t("Изтриване", :scope => [:partials, :documents])  %> <%= f.object.name %>" style="display: none">
-    <p>
-      <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 30px 0;"></span>
-      <%= t("Изтриване", :scope => [:partials, :documents])  %> <%= f.object.name %><br />
-      <%= t("Are you sure?") %>
-    </p>
-  </div>
-
-  <ul class="item_preview" >
-    <li>
-      <%= t("Свали файл",  :scope => [:partials, :documents]) %>
-
-      <%= remove_link(f) %>
-
-      <% if has_expanded_preview  %>
-        <%= link_to image_tag("edit.png", :class => "icon"), "#", :id => "#{f.object_id.abs}", :class => "toggle_item_form" %>
-
-
-        <!-- Put the preview fields here -->
-        <%= link_to(h(f.object.document.original_filename), f.object.document.url)  %>
-        <%= h f.object.name %>
-        <%= h f.object.description %>
-
-      <% else %>
-        <%= t("Изтриване", :scope => [:partials, :documents]) %>
-      <% end %>
-    </li>
-  </ul>
-
-  <ul class="item_form" <%= f.object.new_record? ? "" : 'style="display:none"' %> >
-
-    <!-- Put the edit fields here -->
-    <%= f.input :name,
-      :wrapper_html => {:style => "display: inline;", :class => "fieldset_#{dom_id(f.object)}"},
-      :input_html => {:style => "width: 120px; display: inline;margin-right: 10px;"} %>
-    <%= f.input :document, :as => :file,
-      :wrapper_html => {:style => "display: block;", :class => "fieldset_#{dom_id(f.object)}"},
-      :input_html => {:style => "display: inline;margin-right: 10px;"} %>
-
-    <%= f.input :description, :as => :text,
-      :wrapper_html => {:style => "display: block;clear:both;", :class => "fieldset_#{dom_id(f.object)}"},
-      :input_html => {:style => "display: inline;margin-right: 10px;height:50px;"} %>
-  </ul>
-
-</fieldset>
